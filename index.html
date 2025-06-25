@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Anniyan - Anonymous Crime Report</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <div class="container">
+        <h1>ANNIYAN</h1>
+        <p class="tagline">"The punishment you escape… finds you eventually."</p>
+        <p class="warning">Report a crime. Stay anonymous. Fear nothing…</p>
+
+        <form id="reportForm">
+            <input type="text" name="name" placeholder="Your Name (Optional)">
+            <input type="text" name="crime" placeholder="Type of Crime (e.g., Theft, Corruption)" required>
+            <input type="text" name="person" placeholder="Person Involved (Leave blank if unknown)">
+            <input type="text" name="location" placeholder="Location (Leave blank if unknown)">
+            <input type="text" name="time" placeholder="Time of Incident (Leave blank if unknown)">
+            <textarea name="description" placeholder="Describe the event in detail..." required></textarea>
+            <button type="submit">Submit Report</button>
+        </form>
+
+        <p class="note">Your report is strictly confidential. Justice never sleeps…</p>
+    </div>
+
+    <script>
+    document.getElementById('reportForm').addEventListener('submit', function(e) {
+        e.preventDefault();
+        
+        const name = e.target.name.value;
+        const crime = e.target.crime.value;
+        const person = e.target.person.value || "Unknown";
+        const location = e.target.location.value || "Unknown";
+        const time = e.target.time.value || "Unknown";
+        const description = e.target.description.value;
+
+        fetch('https://sheet.best/api/sheets/YOUR-REAL-SHEETBEST-URL-HERE', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+                name: name,
+                crime: crime,
+                person: person,
+                location: location,
+                time: time,
+                description: description
+            })
+        })
+        .then(res => {
+            if (res.ok) {
+                alert("✅ Report submitted. Justice never forgets.");
+                e.target.reset();
+            } else {
+                alert("❌ Failed to submit. Try again.");
+            }
+        })
+        .catch(err => {
+            console.error(err);
+            alert("❌ Network error. Please try again.");
+        });
+    });
+    </script>
+
+</body>
+</html>
