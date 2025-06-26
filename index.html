@@ -25,44 +25,42 @@
 
         <p class="note">Your report is strictly confidential. Justice never sleeps…</p>
     </div>
+   <script>
+document.getElementById('reportForm').addEventListener('submit', function(e) {
+    e.preventDefault();
+    
+    const name = e.target.name.value;
+    const crime = e.target.crime.value;
+    const person = e.target.person.value || "Unknown";
+    const location = e.target.location.value || "Unknown";
+    const time = e.target.time.value || "Unknown";
+    const description = e.target.description.value;
 
-    <script>
-    document.getElementById('reportForm').addEventListener('submit', function(e) {
-        e.preventDefault();
-        
-        const name = e.target.name.value;
-        const crime = e.target.crime.value;
-        const person = e.target.person.value || "Unknown";
-        const location = e.target.location.value || "Unknown";
-        const time = e.target.time.value || "Unknown";
-        const description = e.target.description.value;
-
-        fetch('https://api.sheetbest.com/sheets/cf969697-682a-40e3-bad4-d54803eeeacf', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({
-                name: name,
-                crime: crime,
-                person: person,
-                location: location,
-                time: time,
-                description: description
-            })
+    fetch('https://sheetdb.io/api/v1/wgolsideguph7', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+            name: name,
+            crime: crime,
+            person: person,
+            location: location,
+            time: time,
+            description: description
         })
-        .then(res => {
-            if (res.ok) {
-                alert("✅ Report submitted. Justice never forgets.");
-                e.target.reset();
-            } else {
-                alert("❌ Failed to submit. Try again.");
-            }
-        })
-        .catch(err => {
-            console.error(err);
-            alert("❌ Network error. Please try again.");
-        });
+    })
+    .then(res => {
+        if (res.ok) {
+            alert("✅ Report submitted. Justice never forgets.");
+            e.target.reset();
+        } else {
+            alert("❌ Failed to submit. Try again.");
+        }
+    })
+    .catch(err => {
+        console.error(err);
+        alert("❌ Network error. Please try again.");
     });
-    </script>
-
+});
+</script>
 </body>
 </html>
