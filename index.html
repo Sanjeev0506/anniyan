@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>ANNIYAN</title>
+  <link rel="stylesheet" href="style.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;600&display=swap" rel="stylesheet" />
+</head>
+<body>
+
+  <!-- 🌌 Header -->
+  <header>
+    <h2>Welcome to Anniyan.com</h2>
+    <p class="tagline">"When evil grows unchecked, justice sharpens its blade."</p>
+  </header>
+
+  <!-- 🧑‍⚖️ About Section -->
+  <section class="about-section">
+    <img src="anniyan.jpg" alt="Anniyan Image" class="anniyan-image" />
+    <div class="about-text">
+      <h3>Who is Anniyan?</h3>
+      <p>
+        A force born from rage. A judge, jury, and executioner for those who defy conscience.  
+        <strong>Anniyan</strong> is not a man. He is the scream of justice echoing through silence.  
+      </p>
+      <p class="message-from-anniyan">“Discipline is the bridge between sin and retribution.”</p>
+    </div>
+  </section>
+
+  <!-- 📬 Complaint Form -->
+  <section class="report-section">
+    <div class="container">
+      <h1>File a Complaint</h1>
+      <div class="line"></div>
+      <p class="subtitle">The sins are noted. Justice is inevitable.</p>
+
+      <form id="reportForm">
+        <input type="text" name="name" placeholder="Your Name (Optional)" />
+        <input type="text" name="crime" placeholder="Crime *" required />
+        <input type="text" name="person" placeholder="Person Responsible (Optional)" />
+        <input type="text" name="location" placeholder="Location (Optional)" />
+        <input type="text" name="time" placeholder="Time of Incident (Optional)" />
+        <textarea name="description" placeholder="Describe the event *" required></textarea>
+        <button type="submit">Submit to Anniyan</button>
+      </form>
+    </div>
+  </section>
+
+  <!-- 🛠 Community Section -->
+  <section class="community-section">
+    <h2>Community Justice Board</h2>
+    <p class="coming-soon">This section is currently being built. Soon, you'll witness a log of justice unfolding...</p>
+  </section>
+
+  <!-- 🧾 Footer -->
+  <footer>
+    <p>Made by: <strong>Supernova</strong></p>
+    <p class="privacy">You won’t be tracked — safely fill the form.</p>
+  </footer>
+
+  <!-- 🔁 Script -->
+  <script>
+    document.getElementById('reportForm').addEventListener('submit', function (e) {
+      e.preventDefault();
+      const name = e.target.name.value;
+      const crime = e.target.crime.value;
+      const person = e.target.person.value || "Unknown";
+      const location = e.target.location.value || "Unknown";
+      const time = e.target.time.value || "Unknown";
+      const description = e.target.description.value;
+
+      fetch('https://sheetdb.io/api/v1/wgolsideguph7', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          data: { Name: name, Crime: crime, Person: person, Location: location, Time: time, Description: description }
+        })
+      })
+      .then(res => {
+        if (res.ok) {
+          alert("✅ Report submitted. Justice never forgets.");
+          e.target.reset();
+        } else {
+          alert("❌ Submission failed. Please check your settings.");
+        }
+      })
+      .catch(err => {
+        console.error(err);
+        alert("❌ Network error. Try again.");
+      });
+    });
+  </script>
+</body>
+</html>
