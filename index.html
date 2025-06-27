@@ -60,36 +60,49 @@
   </footer>
 
   <!-- 🔁 Script -->
-  <script>
-    document.getElementById('reportForm').addEventListener('submit', function (e) {
-      e.preventDefault();
-      const name = e.target.name.value;
-      const crime = e.target.crime.value;
-      const person = e.target.person.value || "Unknown";
-      const location = e.target.location.value || "Unknown";
-      const time = e.target.time.value || "Unknown";
-      const description = e.target.description.value;
+ <script>
+  document.getElementById('reportForm').addEventListener('submit', function (e) {
+    e.preventDefault();
 
-      fetch('https://sheetdb.io/api/v1/wgolsideguph7', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          data: { Name: name, Crime: crime, Person: person, Location: location, Time: time, Description: description }
-        })
-      })
-      .then(res => {
-        if (res.ok) {
-          alert("✅ Report submitted. Justice never forgets.");
-          e.target.reset();
-        } else {
-          alert("❌ Submission failed. Please check your settings.");
+    const name = e.target.name.value;
+    const crime = e.target.crime.value.trim();
+    const person = e.target.person.value.trim();
+    const location = e.target.location.value.trim();
+    const time = e.target.time.value.trim();
+    const description = e.target.description.value.trim();
+
+    if (!crime || !description) {
+      alert("⚠️ Fill required details");
+      return;
+    }
+
+    fetch('https://sheetdb.io/myapikey', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        data: {
+          Name: name,
+          Crime: crime,
+          Person: person || "Unknown",
+          Location: location || "Unknown",
+          Time: time || "Unknown",
+          Description: description
         }
       })
-      .catch(err => {
-        console.error(err);
-        alert("❌ Network error. Try again.");
-      });
+    })
+    .then(res => {
+      if (res.ok) {
+        alert("✅ Report submitted. Justice never forgets.");
+        e.target.reset();
+      } else {
+        alert("❌ Submission failed. Please check your sheet settings.");
+      }
+    })
+    .catch(err => {
+      console.error(err);
+      alert("❌ Network error. Try again.");
     });
-  </script>
+  });
+</script>
 </body>
 </html>
